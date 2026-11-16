@@ -1,0 +1,51 @@
+<?php
+
+namespace App\Models;
+
+use App\Enums\AppointmentStatus;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class Appointment extends Model
+{
+    use SoftDeletes;
+
+    protected $fillable = [
+        'patient_id', 'dentist_id', 'start_at', 'end_at', 'status',
+        'reason', 'notes', 'cancelled_reason', 'created_by',
+    ];
+
+    protected function casts(): array
+    {
+        return [
+            'start_at' => 'datetime',
+            'end_at'   => 'datetime',
+            'status'   => AppointmentStatus::class,
+        ];
+    }
+
+    public function patient(): BelongsTo
+    {
+        return $this->belongsTo(Patient::class);
+    }
+
+    public function dentist(): BelongsTo
+    {
+        return $this->belongsTo(Dentist::class);
+    }
+
+    public function treatments(): BelongsToMany
+    {
+        return $this->belongsToMany(Treatment::class, 'appointment_treatment')
+            ->withPivot(['id', 'tooth_number', 'price', 'notes'])
+            ->withTimestamps();
+    }
+
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class);
+    }
+}
