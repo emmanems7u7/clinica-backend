@@ -4,9 +4,9 @@ API REST desarrollada con Laravel para la gestión de una clínica odontológica
 
 # DESARROLLADORES:
 
-Diego Emanuel Chavez Ramos
-Elmer Gustavo Illanes Tarqui
-Juan Daniel Calle Quispe
+- Diego Emanuel Chavez Ramos
+- Elmer Gustavo Illanes Tarqui
+- Juan Daniel Calle Quispe
 
 ## 1. Requisitos
 
